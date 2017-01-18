@@ -29,3 +29,54 @@ class Point:
     
     def __repr__(self):
         return '({}, {}, {})'.format(self.x, self.y, self.z)
+    
+    def __getitem__(self, i):
+        if i == 0: return self.x
+        if i == 1: return self.y
+        if i == 2: return self.z
+        else: raise IndexError
+
+    def __setitem__(self, i, a):
+        if i == 0: self.x = a
+        if i == 1: self.y = a
+        if i == 2: self.z = a
+        else: raise IndexError
+    
+    def _mathop(self, fun):
+        mapping = map(fun, self)
+        if NotImplemented in mapping:
+            return NotImplemented
+        return Point(*mapping)
+    
+    def __abs__(self):
+        return self._mathop(lambda x: abs(x))
+    
+    def __add__(self, a):
+        return self._mathop(lambda x: x + a)
+    
+    def __radd__(self, a):
+        return self + a
+        
+    def __sub__(self, a):
+        return self._mathop(lambda x: x - a)
+    
+    def __rsub__(self, a):
+        return self - a
+    
+    def __mul__(self, a):
+        return self._mathop(lambda x: x * a)
+    
+    def __rmul__(self, a):
+        return self * a
+    
+    def __div__(self, a):
+        return self._mathop(lambda x: x / a)
+    
+    def __floordiv__(self, a):
+        return self._mathop(lambda x: x // a)
+    
+    def __mod__(self, a):
+        return self._mathop(lambda x: x % a)
+    
+    def __pow__(self, a):
+        return self._mathop(lambda x: x ** a)
